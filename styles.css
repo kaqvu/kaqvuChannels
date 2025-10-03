@@ -775,61 +775,130 @@ h1 {
     box-shadow: 0 5px 20px rgba(108, 117, 125, 0.6);
 }
 
-.search-container {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 20px;
+.add-channel-container {
+    margin: 20px 0;
+    text-align: center;
 }
 
 .add-channel-btn {
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 12px 30px;
+    background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .add-channel-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
 }
 
-.delete-btn {
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
+.delete-channel-btn {
+    background: linear-gradient(45deg, #ff4444, #cc1111);
     border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    color: white;
+    font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.delete-btn:hover {
+.delete-channel-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+    box-shadow: 0 5px 20px rgba(255, 68, 68, 0.6);
 }
 
 .confirm-modal {
-    max-width: 400px;
-}
-
-.confirm-modal .modal-body p {
-    text-align: center;
-    font-size: 16px;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.confirm-modal .modal-buttons {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
     justify-content: center;
+    align-items: center;
+    z-index: 10001;
+}
+
+.confirm-content {
+    background: rgba(15, 15, 35, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.confirm-content h3 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.confirm-yes-btn {
+    background: linear-gradient(45deg, #ff4444, #cc1111);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.confirm-yes-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 68, 68, 0.6);
+}
+
+.confirm-no-btn {
+    background: linear-gradient(45deg, #6c757d, #495057);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.confirm-no-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(108, 117, 125, 0.6);
+}
+
+.url-input {
+    min-width: 400px;
+}
+
+.url-input-add {
+    min-width: 400px;
+}
+
+@media (max-width: 768px) {
+    .url-input,
+    .url-input-add {
+        min-width: 100%;
+    }
 }
 
 @media (max-width: 768px) {

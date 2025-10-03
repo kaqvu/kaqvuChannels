@@ -33,7 +33,9 @@
         <div class="container">
             <div class="search-container">
                 <input type="text" class="search-input" id="searchInput" placeholder="Szukaj kanału...">
-                <button class="add-channel-btn" onclick="openAddChannelModal()">Dodaj nowy kanał</button>
+            </div>
+            <div class="add-channel-container">
+                <button class="add-channel-btn" onclick="openAddModal()">➕ Dodaj nowy kanał</button>
             </div>
             <div id="channelsContainer">
                 <div class="loading">
@@ -59,23 +61,39 @@
                 <button class="add-url-btn" onclick="addUrlField()">Dodaj URL</button>
                 <div class="modal-buttons">
                     <button class="save-btn" onclick="saveChannel()">Zapisz</button>
-                    <button class="delete-btn" id="deleteChannelBtn" onclick="showDeleteConfirmation()">Usuń</button>
+                    <button class="delete-channel-btn" onclick="confirmDeleteChannel()">Usuń</button>
                     <button class="cancel-btn" onclick="closeEditModal()">Anuluj</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="edit-modal hidden" id="confirmModal">
-        <div class="modal-content confirm-modal">
+    <div class="edit-modal hidden" id="addModal">
+        <div class="modal-content">
             <div class="modal-header">
-                <h2>Potwierdzenie usunięcia</h2>
+                <h2>Dodaj Nowy Kanał</h2>
+                <button class="close-btn" onclick="closeAddModal()">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Czy na pewno chcesz usunąć ten kanał?</p>
-                <div class="modal-buttons">
-                    <button class="save-btn" onclick="confirmDeleteChannel()">Tak</button>
-                    <button class="cancel-btn" onclick="closeDeleteConfirmation()">Nie</button>
+                <div class="form-group">
+                    <label>Nazwa kanału:</label>
+                    <input type="text" id="addChannelNameInput" class="form-input">
                 </div>
+                <div class="urls-container" id="addUrlsContainer">
+                </div>
+                <button class="add-url-btn" onclick="addUrlFieldToAdd()">Dodaj URL</button>
+                <div class="modal-buttons">
+                    <button class="save-btn" onclick="saveNewChannel()">Zapisz</button>
+                    <button class="cancel-btn" onclick="closeAddModal()">Anuluj</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="confirm-modal hidden" id="confirmModal">
+        <div class="confirm-content">
+            <h3>Czy na pewno chcesz usunąć ten kanał?</h3>
+            <div class="confirm-buttons">
+                <button class="confirm-yes-btn" onclick="deleteChannel()">Tak</button>
+                <button class="confirm-no-btn" onclick="closeConfirmModal()">Nie</button>
             </div>
         </div>
     </div>

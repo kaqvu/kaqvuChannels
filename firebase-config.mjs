@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { getFirestore, doc, getDoc, setDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDaCtcco2EBukDQLGAuy4Tivq3mH2ACsiQ",
@@ -170,6 +170,22 @@ async getChannelsData() {
       return true;
     } catch (error) {
       console.error('Błąd zapisywania danych do Firestore:', error);
+      throw error;
+    }
+  }
+
+  async deleteChannel(channelId) {
+    try {
+      const docSnap = await getDoc(this.docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data().channelsData;
+        delete data[channelId];
+        await setDoc(this.docRef, { channelsData: data });
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Błąd usuwania kanału z Firestore:', error);
       throw error;
     }
   }

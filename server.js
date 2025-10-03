@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 
 app.use(express.static(__dirname));
 
-app.get('*', (req, res) => {
+app.use((req, res) => {
     if (path.extname(req.path)) {
         return res.status(404).send('Plik nie znaleziony');
     }

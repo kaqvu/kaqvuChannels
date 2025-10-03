@@ -10,11 +10,6 @@ const categories = {
     'Inne Kanały': ['TVP', 'MOTOWIZJA', 'Eurosport']
 };
 
-let sessionData = {
-    isLoggedIn: false,
-    loginTime: null
-};
-
 function escapeHtml(unsafe) {
     return unsafe
         .replace(/&/g, "&amp;")
@@ -79,11 +74,13 @@ function showError(message) {
 }
 
 function checkLoginStatus() {
-    const currentTime = Date.now();
-    const sessionDuration = 24 * 60 * 60 * 1000;
+    const loginTime = getCookie('adminLoginTime');
     
-    if (sessionData.isLoggedIn && sessionData.loginTime) {
-        const timeDiff = currentTime - sessionData.loginTime;
+    if (loginTime) {
+        const currentTime = Date.now();
+        const sessionDuration = 24 * 60 * 60 * 1000;
+        const timeDiff = currentTime - parseInt(loginTime);
+        
         if (timeDiff < sessionDuration) {
             isLoggedIn = true;
             showAdminView();
@@ -124,6 +121,28 @@ function showAdminView() {
     }, 100);
 }
 
+function setCookie(name, value, hours) {
+    const d = new Date();
+    d.setTime(d.getTime() + (hours * 60 * 60 * 1000));
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+function deleteCookie(name) {
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
 function login(event) {
     event.preventDefault();
     
@@ -143,8 +162,7 @@ function login(event) {
         isLoggedIn = true;
         const currentTime = Date.now();
         
-        sessionData.isLoggedIn = true;
-        sessionData.loginTime = currentTime;
+        setCookie('adminLoginTime', currentTime.toString(), 24);
         
         errorDiv.textContent = '';
         showAdminView();
@@ -155,8 +173,7 @@ function login(event) {
 
 function logout() {
     isLoggedIn = false;
-    sessionData.isLoggedIn = false;
-    sessionData.loginTime = null;
+    deleteCookie('adminLoginTime');
     
     showLoginView();
     
@@ -649,10 +666,4 @@ document.addEventListener('DOMContentLoaded', function() {
             closeAddModal();
         }
     });
-    
-    setInterval(() => {
-        if (isLoggedIn) {
-            sessionData.loginTime = Date.now();
-        }
-    }, 5 * 60 * 1000);
 });

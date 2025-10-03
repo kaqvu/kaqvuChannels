@@ -519,40 +519,30 @@ h1 {
 
 .home-btn,
 .logout-btn {
-    position: relative;
-    z-index: 1003;
-}
-
-.home-btn {
-    background: linear-gradient(45deg, #06ffa5, #3a86ff);
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 20px;
+    background: linear-gradient(45deg, #00d970, #0070d9, #d97000, #9d00d9, #d9d900);
+    background-size: 400% 400%;
     color: white;
-    font-weight: bold;
-    cursor: pointer;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 0 20px rgba(217, 0, 112, 0.5);
+    border: 2px solid transparent;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     transition: all 0.3s ease;
-}
-
-.home-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(6, 255, 165, 0.6);
-}
-
-.logout-btn {
-    background: linear-gradient(45deg, #ff4444, #cc1111);
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 20px;
-    color: white;
-    font-weight: bold;
+    user-select: none;
+    letter-spacing: 0.5px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    text-transform: uppercase;
+    animation: gradientShift 3s ease infinite;
 }
 
+.home-btn:hover,
 .logout-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(255, 68, 68, 0.6);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 30px rgba(217, 0, 112, 0.8);
+    animation: gradientShift 1.5s ease infinite;
 }
 
 .edit-button {

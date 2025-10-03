@@ -892,11 +892,9 @@ h1 {
     box-shadow: 0 5px 20px rgba(108, 117, 125, 0.6);
 }
 
-.url-input {
-    min-width: 400px;
-}
-
+.url-input,
 .url-input-add {
+    flex: 1;
     min-width: 400px;
 }
 

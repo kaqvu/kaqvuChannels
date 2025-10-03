@@ -781,23 +781,29 @@ h1 {
 }
 
 .add-channel-btn {
-    padding: 12px 30px;
-    background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(45deg, #00d970, #0070d9, #d97000, #9d00d9, #d9d900);
+    background-size: 400% 400%;
     color: white;
-    border: none;
-    border-radius: 25px;
+    padding: 12px 30px;
+    border-radius: 8px;
     font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 0 20px rgba(217, 0, 112, 0.5);
+    border: 2px solid transparent;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-    text-transform: uppercase;
+    user-select: none;
     letter-spacing: 1px;
+    cursor: pointer;
+    text-transform: uppercase;
+    animation: gradientShift 3s ease infinite;
 }
 
 .add-channel-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 30px rgba(217, 0, 112, 0.8);
+    animation: gradientShift 1.5s ease infinite;
 }
 
 .delete-channel-btn {

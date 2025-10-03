@@ -10,11 +10,6 @@ const categories = {
     'Inne Kanały': ['TVP', 'MOTOWIZJA', 'Eurosport']
 };
 
-let sessionData = {
-    isLoggedIn: false,
-    loginTime: null
-};
-
 function escapeHtml(unsafe) {
     return unsafe
         .replace(/&/g, "&amp;")
@@ -79,19 +74,12 @@ function showError(message) {
 }
 
 function checkLoginStatus() {
-    const currentTime = Date.now();
-    const sessionDuration = 24 * 60 * 60 * 1000;
+    const loginState = localStorage.getItem('adminLoggedIn');
     
-    if (sessionData.isLoggedIn && sessionData.loginTime) {
-        const timeDiff = currentTime - sessionData.loginTime;
-        if (timeDiff < sessionDuration) {
-            isLoggedIn = true;
-            showAdminView();
-            return true;
-        } else {
-            logout();
-            return false;
-        }
+    if (loginState === 'true') {
+        isLoggedIn = true;
+        showAdminView();
+        return true;
     }
     
     showLoginView();
@@ -141,10 +129,7 @@ function login(event) {
     
     if (login === 'admin' && password === 'kaqvu11') {
         isLoggedIn = true;
-        const currentTime = Date.now();
-        
-        sessionData.isLoggedIn = true;
-        sessionData.loginTime = currentTime;
+        localStorage.setItem('adminLoggedIn', 'true');
         
         errorDiv.textContent = '';
         showAdminView();
@@ -155,8 +140,7 @@ function login(event) {
 
 function logout() {
     isLoggedIn = false;
-    sessionData.isLoggedIn = false;
-    sessionData.loginTime = null;
+    localStorage.removeItem('adminLoggedIn');
     
     showLoginView();
     
@@ -466,10 +450,4 @@ document.addEventListener('DOMContentLoaded', function() {
             closeEditModal();
         }
     });
-    
-    setInterval(() => {
-        if (isLoggedIn) {
-            sessionData.loginTime = Date.now();
-        }
-    }, 5 * 60 * 1000);
 });

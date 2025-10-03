@@ -33,6 +33,7 @@
         <div class="container">
             <div class="search-container">
                 <input type="text" class="search-input" id="searchInput" placeholder="Szukaj kanału...">
+                <button class="add-channel-btn" onclick="openAddChannelModal()">Dodaj nowy kanał</button>
             </div>
             <div id="channelsContainer">
                 <div class="loading">
@@ -58,7 +59,22 @@
                 <button class="add-url-btn" onclick="addUrlField()">Dodaj URL</button>
                 <div class="modal-buttons">
                     <button class="save-btn" onclick="saveChannel()">Zapisz</button>
+                    <button class="delete-btn" id="deleteChannelBtn" onclick="showDeleteConfirmation()">Usuń</button>
                     <button class="cancel-btn" onclick="closeEditModal()">Anuluj</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="edit-modal hidden" id="confirmModal">
+        <div class="modal-content confirm-modal">
+            <div class="modal-header">
+                <h2>Potwierdzenie usunięcia</h2>
+            </div>
+            <div class="modal-body">
+                <p>Czy na pewno chcesz usunąć ten kanał?</p>
+                <div class="modal-buttons">
+                    <button class="save-btn" onclick="confirmDeleteChannel()">Tak</button>
+                    <button class="cancel-btn" onclick="closeDeleteConfirmation()">Nie</button>
                 </div>
             </div>
         </div>

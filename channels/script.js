@@ -425,6 +425,121 @@ function filterChannels() {
     renderChannels(filtered);
 }
 
+function openAddChannelModal() {
+    if (!isLoggedIn) return;
+    
+    currentEditingChannel = null;
+    
+    const modalTitle = document.getElementById('modalTitle');
+    const channelNameInput = document.getElementById('channelNameInput');
+    const deleteBtn = document.getElementById('deleteChannelBtn');
+    
+    if (modalTitle) modalTitle.textContent = 'Dodawanie Nowego Kanału';
+    if (channelNameInput) channelNameInput.value = '';
+    if (deleteBtn) deleteBtn.style.display = 'none';
+    
+    const urlsContainer = document.getElementById('urlsContainer');
+    if (urlsContainer) {
+        urlsContainer.innerHTML = `
+            <div class="url-field" data-url-key="url1">
+                <label>URL 1:</label>
+                <div class="url-input-group">
+                    <input type="text" class="form-input url-input" value="" data-url-key="url1">
+                    <button class="delete-url-btn" onclick="removeUrlField('url1')" disabled>🗑️</button>
+                </div>
+            </div>
+        `;
+    }
+    
+    const editModal = document.getElementById('editModal');
+    if (editModal) editModal.classList.remove('hidden');
+}
+
+async function addNewChannel() {
+    const channelNameInput = document.getElementById('channelNameInput');
+    if (!channelNameInput) return;
+    
+    const channelName = channelNameInput.value.trim();
+    if (!channelName) {
+        alert('Nazwa kanału nie może być pusta');
+        return;
+    }
+    
+    const urlInputs = document.querySelectorAll('.url-input');
+    const hasEmptyUrl = Array.from(urlInputs).some(input => {
+        const value = input.value.trim();
+        return value === '';
+    });
+    
+    if (hasEmptyUrl) {
+        alert('Wszystkie pola URL muszą być wypełnione lub usunięte');
+        return;
+    }
+    
+    const newChannel = {
+        name: channelName,
+        language: 'PL',
+        quality: 'HD'
+    };
+    
+    urlInputs.forEach(input => {
+        const urlKey = input.dataset.urlKey;
+        const urlValue = input.value.trim();
+        if (urlValue) {
+            newChannel[urlKey] = urlValue;
+        }
+    });
+    
+    const newId = 'channel_' + Date.now();
+    channelsData[newId] = [newChannel];
+    channelLookupById[newId] = newChannel;
+    
+    try {
+        await saveChannelsDataToFirestore();
+        closeEditModal();
+        renderChannels();
+        alert('Kanał został dodany do bazy danych!');
+    } catch (error) {
+        alert('Błąd dodawania: ' + error.message);
+    }
+}
+
+function showDeleteConfirmation() {
+    const confirmModal = document.getElementById('confirmModal');
+    if (confirmModal) confirmModal.classList.remove('hidden');
+}
+
+function closeDeleteConfirmation() {
+    const confirmModal = document.getElementById('confirmModal');
+    if (confirmModal) confirmModal.classList.add('hidden');
+}
+
+async function confirmDeleteChannel() {
+    if (!currentEditingChannel) return;
+    
+    delete channelsData[currentEditingChannel.id];
+    delete channelLookupById[currentEditingChannel.id];
+    
+    try {
+        await saveChannelsDataToFirestore();
+        closeDeleteConfirmation();
+        closeEditModal();
+        renderChannels();
+        alert('Kanał został usunięty z bazy danych!');
+    } catch (error) {
+        alert('Błąd usuwania: ' + error.message);
+    }
+}
+
+function renderChannels(filteredData = null) {
+    if (!isLoggedIn || !channelsData || Object.keys(channelsData).length === 0) return;
+    
+    const container = document.getElementById('channelsContainer');
+    if (!container) return;
+    
+    const dataToRender = filteredData || channelsData;
+    const groupedChannels = {};
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM załadowany - inicjalizacja panelu admina');
     

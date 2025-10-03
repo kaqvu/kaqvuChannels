@@ -1,0 +1,20 @@
+{
+  "name": "kaqvuChannels",
+  "version": "1.14.3",
+  "description": "FREE CHANNELS",
+  "scripts": {
+    "start": "node server.js",
+    "install": "npm install express firebase",
+    "build": "echo Build completed"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "firebase": "^10.14.1"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "devDependencies": {
+    "eslint": "^9.35.0"
+  }
+}

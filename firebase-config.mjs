@@ -1,0 +1,66 @@
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDaCtcco2EBukDQLGAuy4Tivq3mH2ACsiQ",
+  authDomain: "kaqvuchannels.firebaseapp.com",
+  projectId: "kaqvuchannels",
+  storageBucket: "kaqvuchannels.firebasestorage.app",
+  messagingSenderId: "61955066743",
+  appId: "1:61955066743:web:5783cefe44e82e19feef72"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+class ChannelsFirestore {
+  constructor() {
+    this.docRef = doc(db, 'channels', 'data');
+  }
+
+  async getChannelsData() {
+    try {
+      const docSnap = await getDoc(this.docRef);
+      if (docSnap.exists()) {
+        return docSnap.data().channelsData;
+      } else {
+        const defaultData = {
+          1: [{
+            "name": "Canal+ Sport 1",
+            "url1": "https://sportio.cc/ssic/22",
+            "url2": "https://strumyk.net/embed/22333",
+            "url3": "https://thedaddy.top/embed/stream-48.php",
+            "country": "PL",
+            "language": "Polski",
+            "quality": "ULTRA HD"
+          }],
+          10: [{
+            "name": "Eleven Sports 1",
+            "url1": "https://strumyk.net/vip/65",
+            "url2": "https://thedaddy.top/embed/stream-71.php",
+            "country": "PL",
+            "language": "Polski",
+            "quality": "ULTRA HD"
+          }]
+        };
+        await this.saveChannelsData(defaultData);
+        return defaultData;
+      }
+    } catch (error) {
+      console.error('Błąd pobierania danych z Firestore:', error);
+      throw error;
+    }
+  }
+
+  async saveChannelsData(channelsData) {
+    try {
+      await setDoc(this.docRef, { channelsData }, { merge: true });
+      return true;
+    } catch (error) {
+      console.error('Błąd zapisywania danych do Firestore:', error);
+      throw error;
+    }
+  }
+}
+
+window.channelsFirestore = new ChannelsFirestore();

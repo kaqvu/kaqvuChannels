@@ -4,43 +4,27 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+app.use((req, res, next) => {
+    const referer = req.get('Referer');
+    const directAccess = !referer || !referer.includes(req.get('host'));
+    const protectedExtensions = ['.js', '.mjs', '.css'];
+    const ext = path.extname(req.path);
+    
+    if (directAccess && protectedExtensions.includes(ext)) {
+        return res.status(403).send('🚫 Bezpośredni dostęp zabroniony');
+    }
+    
+    next();
+});
+
 app.use(express.static(__dirname));
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
+    if (path.extname(req.path)) {
+        return res.status(404).send('Plik nie znaleziony');
+    }
     res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.get('/channels', (req, res) => {
-    res.sendFile(path.join(__dirname, 'channels', 'index.html'));
-});
-
-app.get('/channels/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'channels', 'index.html'));
-});
-
-app.get('/channels/index.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'channels', 'index.html'));
-});
-
-app.get('/channels/script.js', (req, res) => {
-    res.sendFile(path.join(__dirname, 'channels', 'script.js'));
-});
-
-app.get('/script.js', (req, res) => {
-    res.sendFile(path.join(__dirname, 'script.js'));
-});
-
-app.get('/styles.css', (req, res) => {
-    res.sendFile(path.join(__dirname, 'styles.css'));
-});
-
-app.get('/firebase-config.mjs', (req, res) => {
-    res.setHeader('Content-Type', 'application/javascript');
-    res.sendFile(path.join(__dirname, 'firebase-config.mjs'));
-});
-
-app.get('/favicon.ico', (req, res) => {
-    res.sendFile(path.join(__dirname, 'favicon.ico'));
 });
 
 app.listen(PORT, () => {

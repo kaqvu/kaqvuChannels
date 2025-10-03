@@ -4,20 +4,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-
-app.use((req, res, next) => {
-    const referer = req.get('Referer');
-    const directAccess = !referer || !referer.includes(req.get('host'));
-    const protectedExtensions = ['.js', '.mjs', '.css'];
-    const ext = path.extname(req.path);
-    
-    if (directAccess && protectedExtensions.includes(ext)) {
-        return res.status(403).send('🚫 Bezpośredni dostęp zabroniony');
-    }
-    
-    next();
-});
-
 app.use(express.static(__dirname));
 
 app.use((req, res) => {

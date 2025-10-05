@@ -207,6 +207,99 @@ function categorizeChannel(channelName) {
     return 'Inne Kanały';
 }
 
+function getAvailableUrls(channel) {
+    const urls = [];
+    for (let i = 1; i <= 10; i++) {
+        const urlKey = `url${i}`;
+        if (channel[urlKey]) {
+            urls.push({key: urlKey, url: channel[urlKey], number: i});
+        }
+    }
+    return urls;
+}
+
+function playChannel(channelId, channelName, url, event) {
+    event.stopPropagation();
+    
+    history.pushState({channelId: channelId, channelName: channelName, url: url}, channelName, `/channels/${channelId}`);
+    showPlayer(url, channelName);
+}
+
+function showPlayer(url, channelName) {
+    const adminView = document.getElementById('adminView');
+    const playerView = document.getElementById('playerView');
+    const playerContainer = document.getElementById('playerContainer');
+    
+    if (!playerView || !playerContainer) {
+        console.error('Nie znaleziono elementów playera');
+        return;
+    }
+    
+    adminView.classList.add('hidden');
+    playerView.classList.remove('hidden');
+    playerView.classList.add('active');
+    
+    // Ustaw style dla playerView i playerContainer
+    playerView.style.position = 'fixed';
+    playerView.style.top = '0';
+    playerView.style.left = '0';
+    playerView.style.width = '100vw';
+    playerView.style.height = '100vh';
+    playerView.style.zIndex = '9999';
+    playerView.style.background = '#000';
+    
+    const iframeHtml = `
+        <iframe 
+            src="${url}" 
+            allowfullscreen 
+            frameborder="0"
+            allow="autoplay; encrypted-media; fullscreen"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;">
+        </iframe>
+    `;
+    
+    playerContainer.innerHTML = iframeHtml;
+    document.title = `${channelName} - kaqvuChannels Admin`;
+    
+    const iframe = playerContainer.querySelector('iframe');
+    iframe.addEventListener('error', function() {
+        console.log('Błąd ładowania iframe');
+    });
+}
+
+function goBackFromPlayer() {
+    const adminView = document.getElementById('adminView');
+    const playerView = document.getElementById('playerView');
+    const playerContainer = document.getElementById('playerContainer');
+    
+    if (!playerView || !playerContainer) return;
+    
+    adminView.classList.remove('hidden');
+    playerView.classList.remove('active');
+    playerView.classList.add('hidden');
+    playerContainer.innerHTML = '';
+    
+    history.pushState({}, 'kaqvuChannels Admin', '/channels');
+    document.title = 'kaqvuChannels - Panel Admina';
+}
+
+function handlePopState(event) {
+    const path = window.location.pathname;
+    
+    if (path === '/channels' || path === '/channels/') {
+        goBackFromPlayer();
+    } else if (path.startsWith('/channels/')) {
+        const channelId = path.substring('/channels/'.length);
+        const channel = channelLookupById[channelId];
+        
+        if (channel) {
+            showPlayer(channel.url1, channel.name);
+        } else {
+            goBackFromPlayer();
+        }
+    }
+}
+
 function openEditModal(channelId) {
     if (!isLoggedIn) return;
     
@@ -585,9 +678,9 @@ function renderChannels(filteredData = null) {
         `;
         
         channels.forEach(channel => {
+            const availableUrls = getAvailableUrls(channel);
             const escapedChannelName = escapeHtml(channel.name);
             const escapedChannelId = escapeHtml(channel.id);
-            const playUrl = channel.url1 || '';
             
             html += `
                 <div class="channel-card">
@@ -597,7 +690,24 @@ function renderChannels(filteredData = null) {
                         <span class="quality-badge ${getQualityClass(channel.quality || 'SD')}">${escapeHtml(channel.quality || 'SD')}</span>
                     </div>
                     <div class="channel-buttons">
-                        <button class="play-button" onclick="window.open('${escapeHtml(playUrl)}', '_blank')" ${!playUrl ? 'disabled' : ''}>Oglądaj na żywo</button>
+                        <div class="url-buttons">
+            `;
+            
+            if (availableUrls.length === 0) {
+                html += `<div class="no-channel-bar">Brak kanału</div>`;
+            } else {
+                for (let i = 0; i < availableUrls.length; i++) {
+                    if (i > 0 && i % 5 === 0) {
+                        html += `</div><div class="url-buttons">`;
+                    }
+                    const urlData = availableUrls[i];
+                    const escapedUrl = escapeHtml(urlData.url);
+                    html += `<button class="url-btn" onclick="playChannel('${escapedChannelId}', '${escapedChannelName}', '${escapedUrl}', event)">L ${urlData.number}</button>`;
+                }
+            }
+            
+            html += `
+                        </div>
                         <button class="edit-button" onclick="openEditModal('${escapedChannelId}')">Edytuj</button>
                     </div>
                 </div>
@@ -641,6 +751,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM załadowany - inicjalizacja panelu admina');
     
     const isAdminPage = window.location.pathname === '/channels' || 
+                       window.location.pathname === '/channels/' ||
                        window.location.pathname.endsWith('/channels.html') ||
                        document.getElementById('loginView') !== null;
     
@@ -655,6 +766,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (loginForm) {
         loginForm.addEventListener('submit', login);
     }
+    
+    window.addEventListener('popstate', handlePopState);
     
     window.addEventListener('click', function(event) {
         const editModal = document.getElementById('editModal');

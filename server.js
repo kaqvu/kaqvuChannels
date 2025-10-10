@@ -13,7 +13,7 @@ app.get('/favicon.ico', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'favicon.ico'))
 })
 
-app.get('/channels', (req, res) => {
+app.get('/channels*', (req, res) => {
     res.sendFile(path.join(__dirname, 'channels', 'index.html'))
 })
 

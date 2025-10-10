@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zarządzanie Kanałami - kaqvuChannels</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="login-view" id="loginView">
@@ -60,8 +60,7 @@
                     <label>Nazwa kanału:</label>
                     <input type="text" id="channelNameInput" class="form-input">
                 </div>
-                <div class="urls-container" id="urlsContainer">
-                </div>
+                <div class="urls-container" id="urlsContainer"></div>
                 <button class="add-url-btn" onclick="addUrlField()">Dodaj URL</button>
                 <div class="modal-buttons">
                     <button class="save-btn" onclick="saveChannel()">Zapisz</button>
@@ -82,8 +81,7 @@
                     <label>Nazwa kanału:</label>
                     <input type="text" id="addChannelNameInput" class="form-input">
                 </div>
-                <div class="urls-container" id="addUrlsContainer">
-                </div>
+                <div class="urls-container" id="addUrlsContainer"></div>
                 <button class="add-url-btn" onclick="addUrlFieldToAdd()">Dodaj URL</button>
                 <div class="modal-buttons">
                     <button class="save-btn" onclick="saveNewChannel()">Zapisz</button>
@@ -101,7 +99,7 @@
             </div>
         </div>
     </div>
-    <script type="module" src="../firebase-config.kaqvuJs"></script>
-    <script src="script.js"></script>
+    <script type="module" src="/firebase-config.kaqvuJs"></script>
+    <script src="/channels/script.js"></script>
 </body>
 </html>

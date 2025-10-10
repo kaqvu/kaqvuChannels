@@ -2,6 +2,7 @@
   "name": "kaqvuChannels",
   "version": "1.14.3",
   "description": "FREE CHANNELS",
+  "type": "commonjs",
   "scripts": {
     "start": "node server.js",
     "install": "npm install express firebase",

@@ -330,18 +330,19 @@ function renderUrlFields(channel) {
     for (let i = 1; i <= 10; i++) {
         const urlKey = `url${i}`;
         if (channel[urlKey]) {
-            urls.push({key: urlKey, url: channel[urlKey], number: i});
+            urls.push({key: urlKey, url: channel[urlKey]});
         }
     }
     
     if (urls.length === 0) {
-        urls.push({key: 'url1', url: '', number: 1});
+        urls.push({key: 'url1', url: ''});
     }
     
-    urls.forEach(urlData => {
+    urls.forEach((urlData, index) => {
+        const displayNumber = index + 1;
         const urlFieldHtml = `
-            <div class="url-field" data-url-key="${urlData.key}">
-                <label>URL ${urlData.number}:</label>
+            <div class="url-field" data-url-key="${urlData.key}" data-display-number="${displayNumber}">
+                <label>URL ${displayNumber}:</label>
                 <div class="url-input-group">
                     <input type="text" class="form-input url-input" value="${escapeHtml(urlData.url)}" data-url-key="${urlData.key}">
                     <button class="delete-url-btn" onclick="removeUrlField('${urlData.key}')" ${urls.length <= 1 ? 'disabled' : ''}>🗑️</button>
@@ -358,6 +359,8 @@ function addUrlField() {
     
     const existingFields = urlsContainer.querySelectorAll('.url-field');
     
+    if (existingFields.length >= 10) return;
+    
     let nextNumber = 1;
     for (let i = 1; i <= 10; i++) {
         const exists = Array.from(existingFields).some(field => 
@@ -369,11 +372,11 @@ function addUrlField() {
         }
     }
     
-    if (nextNumber > 10) return;
+    const displayNumber = existingFields.length + 1;
     
     const urlFieldHtml = `
-        <div class="url-field" data-url-key="url${nextNumber}">
-            <label>URL ${nextNumber}:</label>
+        <div class="url-field" data-url-key="url${nextNumber}" data-display-number="${displayNumber}">
+            <label>URL ${displayNumber}:</label>
             <div class="url-input-group">
                 <input type="text" class="form-input url-input" value="" data-url-key="url${nextNumber}">
                 <button class="delete-url-btn" onclick="removeUrlField('url${nextNumber}')">🗑️</button>
@@ -389,8 +392,24 @@ function removeUrlField(urlKey) {
     const field = document.querySelector(`[data-url-key="${urlKey}"]`);
     if (field) {
         field.remove();
+        renumberUrlFields();
         updateDeleteButtons();
     }
+}
+
+function renumberUrlFields() {
+    const urlsContainer = document.getElementById('urlsContainer');
+    if (!urlsContainer) return;
+    
+    const urlFields = urlsContainer.querySelectorAll('.url-field');
+    urlFields.forEach((field, index) => {
+        const displayNumber = index + 1;
+        field.dataset.displayNumber = displayNumber;
+        const label = field.querySelector('label');
+        if (label) {
+            label.textContent = `URL ${displayNumber}:`;
+        }
+    });
 }
 
 function updateDeleteButtons() {
@@ -525,7 +544,7 @@ function renderAddUrlFields() {
     urlsContainer.innerHTML = '';
     
     const urlFieldHtml = `
-        <div class="url-field" data-url-key="url1">
+        <div class="url-field" data-url-key="url1" data-display-number="1">
             <label>URL 1:</label>
             <div class="url-input-group">
                 <input type="text" class="form-input url-input-add" value="" data-url-key="url1">
@@ -542,6 +561,8 @@ function addUrlFieldToAdd() {
     
     const existingFields = urlsContainer.querySelectorAll('.url-field');
     
+    if (existingFields.length >= 10) return;
+    
     let nextNumber = 1;
     for (let i = 1; i <= 10; i++) {
         const exists = Array.from(existingFields).some(field => 
@@ -553,11 +574,11 @@ function addUrlFieldToAdd() {
         }
     }
     
-    if (nextNumber > 10) return;
+    const displayNumber = existingFields.length + 1;
     
     const urlFieldHtml = `
-        <div class="url-field" data-url-key="url${nextNumber}">
-            <label>URL ${nextNumber}:</label>
+        <div class="url-field" data-url-key="url${nextNumber}" data-display-number="${displayNumber}">
+            <label>URL ${displayNumber}:</label>
             <div class="url-input-group">
                 <input type="text" class="form-input url-input-add" value="" data-url-key="url${nextNumber}">
                 <button class="delete-url-btn" onclick="removeAddUrlField('url${nextNumber}')">🗑️</button>
@@ -576,8 +597,24 @@ function removeAddUrlField(urlKey) {
     const field = urlsContainer.querySelector(`[data-url-key="${urlKey}"]`);
     if (field) {
         field.remove();
+        renumberAddUrlFields();
         updateAddDeleteButtons();
     }
+}
+
+function renumberAddUrlFields() {
+    const urlsContainer = document.getElementById('addUrlsContainer');
+    if (!urlsContainer) return;
+    
+    const urlFields = urlsContainer.querySelectorAll('.url-field');
+    urlFields.forEach((field, index) => {
+        const displayNumber = index + 1;
+        field.dataset.displayNumber = displayNumber;
+        const label = field.querySelector('label');
+        if (label) {
+            label.textContent = `URL ${displayNumber}:`;
+        }
+    });
 }
 
 function updateAddDeleteButtons() {
@@ -701,8 +738,9 @@ function renderChannels(filteredData = null) {
                         html += `</div><div class="url-buttons">`;
                     }
                     const urlData = availableUrls[i];
+                    const displayNumber = i + 1;
                     const escapedUrl = escapeHtml(urlData.url);
-                    html += `<button class="url-btn" onclick="playChannel('${escapedChannelId}', '${escapedChannelName}', '${escapedUrl}', event)">L ${urlData.number}</button>`;
+                    html += `<button class="url-btn" onclick="playChannel('${escapedChannelId}', '${escapedChannelName}', '${escapedUrl}', event)">L ${displayNumber}</button>`;
                 }
             }
             

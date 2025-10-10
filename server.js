@@ -13,9 +13,9 @@ app.get('/favicon.ico', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'favicon.ico'))
 })
 
-app.get('/channels*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'channels', 'index.html'))
-})
+app.get(['/channels', '/channels/*'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.get('/channels/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'channels', 'index.html'))

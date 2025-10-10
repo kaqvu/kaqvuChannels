@@ -13,6 +13,10 @@ app.get('/favicon.ico', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'favicon.ico'))
 })
 
+app.get('/channels', (req, res) => {
+    res.sendFile(path.join(__dirname, 'channels', 'index.html'))
+})
+
 app.get('/channels/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'channels', 'index.html'))
 })
@@ -33,6 +37,12 @@ app.get('/script.js', (req, res) => {
     const referer = req.get('Referer')
     if (!referer || !referer.includes(req.get('host'))) return sendAccessDenied(res)
     res.sendFile(path.join(__dirname, 'public', 'script.js'))
+})
+
+app.get('/directblock.css', (req, res) => {
+    const referer = req.get('Referer')
+    if (!referer || !referer.includes(req.get('host'))) return sendAccessDenied(res)
+    res.sendFile(path.join(__dirname, 'public', 'directblock.css'))
 })
 
 app.get('/firebase-config.kaqvuJs', (req, res) => {

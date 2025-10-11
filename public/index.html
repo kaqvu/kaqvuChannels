@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kaqvuChannels</title>
+    <script>
+        const TIMESTAMP = Date.now();
+    </script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -34,7 +37,17 @@
         <div class="player-container" id="playerContainer">
         </div>
     </div>
-    <script type="module" src="firebase-config.kaqvuJs"></script>
-    <script src="script.js"></script>
+    <script>
+        document.querySelector('link[href="styles.css"]').href = `styles.css?v=${TIMESTAMP}`;
+        
+        const firebaseScript = document.createElement('script');
+        firebaseScript.type = 'module';
+        firebaseScript.src = `firebase-config.kaqvuJs?v=${TIMESTAMP}`;
+        document.body.appendChild(firebaseScript);
+        
+        const mainScript = document.createElement('script');
+        mainScript.src = `script.js?v=${TIMESTAMP}`;
+        document.body.appendChild(mainScript);
+    </script>
 </body>
 </html>

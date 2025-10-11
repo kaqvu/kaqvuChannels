@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zarządzanie Kanałami - kaqvuChannels</title>
-    <script>
-        const TIMESTAMP = Date.now();
-    </script>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles.css?v=1">
 </head>
 <body>
     <div class="login-view" id="loginView">
@@ -102,17 +99,7 @@
             </div>
         </div>
     </div>
-    <script>
-        document.querySelector('link[href="/styles.css"]').href = `/styles.css?v=${TIMESTAMP}`;
-        
-        const firebaseScript = document.createElement('script');
-        firebaseScript.type = 'module';
-        firebaseScript.src = `/firebase-configure.js?v=${TIMESTAMP}`;
-        document.body.appendChild(firebaseScript);
-        
-        const channelsScript = document.createElement('script');
-        channelsScript.src = `/channels/script.js?v=${TIMESTAMP}`;
-        document.body.appendChild(channelsScript);
-    </script>
+    <script type="module" src="/firebase-configure.js?v=1"></script>
+    <script src="/channels/script.js?v=1"></script>
 </body>
 </html>

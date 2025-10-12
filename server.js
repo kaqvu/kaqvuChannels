@@ -48,7 +48,8 @@ app.get('/directblock.css', (req, res) => {
 app.get('/firebase-config.kjs', (req, res) => {
     const referer = req.get('Referer')
     if (!referer || !referer.includes(req.get('host'))) return sendAccessDenied(res)
-    res.setHeader('Content-Type', 'application/javascript')
+    res.setHeader('Content-Type', 'application/javascript; charset=utf-8')
+    res.setHeader('X-Content-Type-Options', 'nosniff')
     res.sendFile(path.join(__dirname, 'public', 'firebase-config.kjs'))
 })
 

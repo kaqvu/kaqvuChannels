@@ -38,22 +38,22 @@ Repozytorium zawierające stronę internetową z dostępem do kanałów sportowy
 ```
 kaqvuChannels/
 │
-├── public/                  # Pliki publiczne strony głównej
-│   ├── directblock.css      # Style dla blokady bezpośredniego dostępu
-│   ├── directblock.html     # Strona blokady bezpośredniego dostępu
-│   ├── favicon.ico          # Ikona strony
-│   ├── firebase-configure.js # Konfiguracja Firebase
-│   ├── index.html           # Główna strona aplikacji
-│   ├── script.js            # Główny skrypt JavaScript
-│   └── styles.css           # Główne style CSS
+├── public/                        # Pliki publiczne strony głównej
+│   ├── directblock.css            # Style dla blokady bezpośredniego dostępu
+│   ├── directblock.html           # Strona blokady bezpośredniego dostępu
+│   ├── favicon.ico                # Ikona strony
+│   ├── firebase-configure-file.js # Konfiguracja Firebase
+│   ├── index.html                 # Główna strona aplikacji
+│   ├── script.js                  # Główny skrypt JavaScript
+│   └── styles.css                 # Główne style CSS
 │
-├── channels/                # Sekcja kanałów sportowych
-│   ├── index.html           # Strona z listą kanałów
-│   └── script.js            # Skrypt obsługi kanałów
+├── channels/                      # Sekcja kanałów sportowych
+│   ├── index.html                 # Strona z listą kanałów
+│   └── script.js                  # Skrypt obsługi kanałów
 │
-├── package.json             # Konfiguracja projektu i zależności
-├── server.js                # Serwer Node.js
-└── vercel.json              # Konfiguracja deploymentu na Vercel
+├── package.json                   # Konfiguracja projektu i zależności
+├── server.js                      # Serwer Node.js
+└── vercel.json                    # Konfiguracja deploymentu na Vercel
 ```
 
 ## 🔧 Technologie

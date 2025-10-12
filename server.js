@@ -45,11 +45,11 @@ app.get('/directblock.css', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'directblock.css'))
 })
 
-app.get('/firebase-config.kaqvuJs', (req, res) => {
+app.get('/firebase-config.kjs', (req, res) => {
     const referer = req.get('Referer')
     if (!referer || !referer.includes(req.get('host'))) return sendAccessDenied(res)
     res.setHeader('Content-Type', 'application/javascript')
-    res.sendFile(path.join(__dirname, 'public', 'firebase-config.kaqvuJs'))
+    res.sendFile(path.join(__dirname, 'public', 'firebase-config.kjs'))
 })
 
 app.use(express.static(path.join(__dirname, 'public')))

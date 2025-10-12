@@ -14,7 +14,7 @@ git push
 timeout /t 1 >nul
 
 echo.
-echo ✅ Wszystkie komendy zostaly wykonane pomyslnie!
+echo Wszystkie komendy zostaly wykonane pomyslnie!
 timeout /t 1 >nul
 
 exit

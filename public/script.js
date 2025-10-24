@@ -57,7 +57,7 @@ function checkDailyCode() {
     
     const now = new Date().getTime();
     const savedTime = parseInt(savedTimestamp);
-    const twelveHoursInMs = 1 * 60 * 1000;
+    const twelveHoursInMs = 12 * 60 * 60 * 1000;
     
     if (now - savedTime > twelveHoursInMs) {
         localStorage.removeItem('dailyCode');

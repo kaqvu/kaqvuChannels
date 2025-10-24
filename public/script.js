@@ -37,6 +37,16 @@ function showNotification(message, type = 'error') {
     }, 10000);
 }
 
+async function getServerTime() {
+    try {
+        const serverTime = await window.channelsFirestore.getServerTime();
+        return new Date(serverTime);
+    } catch (error) {
+        console.error('Błąd pobierania czasu serwera:', error);
+        return new Date();
+    }
+}
+
 async function getDailyCodeFromFirestore() {
     try {
         const code = await window.channelsFirestore.getDailyCode();
@@ -47,21 +57,20 @@ async function getDailyCodeFromFirestore() {
     }
 }
 
-function checkDailyCode() {
+async function checkDailyCode() {
     const savedCode = localStorage.getItem('dailyCode');
-    const savedTimestamp = localStorage.getItem('codeTimestamp');
+    const savedDate = localStorage.getItem('codeDate');
     
-    if (!savedCode || !savedTimestamp) {
+    if (!savedCode || !savedDate) {
         return false;
     }
     
-    const now = new Date().getTime();
-    const savedTime = parseInt(savedTimestamp);
-    const twelveHoursInMs = 12 * 60 * 60 * 1000;
+    const serverTime = await getServerTime();
+    const serverDateString = serverTime.toISOString().split('T')[0];
     
-    if (now - savedTime > twelveHoursInMs) {
+    if (savedDate !== serverDateString) {
         localStorage.removeItem('dailyCode');
-        localStorage.removeItem('codeTimestamp');
+        localStorage.removeItem('codeDate');
         localStorage.removeItem('adProgress');
         return false;
     }
@@ -94,7 +103,7 @@ function allAdsCompleted() {
 async function showCodeModal() {
     if (checkExpiry()) return;
     
-    if (checkDailyCode()) {
+    if (await checkDailyCode()) {
         const modal = document.createElement('div');
         modal.className = 'code-modal';
         modal.id = 'codeModal';
@@ -215,11 +224,13 @@ async function saveCode() {
         return;
     }
     
-    const timestamp = new Date().getTime();
-    localStorage.setItem('dailyCode', code);
-    localStorage.setItem('codeTimestamp', timestamp.toString());
+    const serverTime = await getServerTime();
+    const serverDateString = serverTime.toISOString().split('T')[0];
     
-    showNotification('✅ Kod zapisany! Dostęp odblokowany na 12h.', 'success');
+    localStorage.setItem('dailyCode', code);
+    localStorage.setItem('codeDate', serverDateString);
+    
+    showNotification('✅ Kod zapisany! Dostęp odblokowany do północy.', 'success');
     closeCodeModal();
 }
 
@@ -358,12 +369,12 @@ function categorizeChannel(channelName) {
     return 'Inne Kanały';
 }
 
-function playChannel(channelId, channelName, url, event) {
+async function playChannel(channelId, channelName, url, event) {
     event.stopPropagation();
     
     if (checkExpiry()) return;
     
-    if (!checkDailyCode()) {
+    if (!(await checkDailyCode())) {
         showNotification('⚠️ Wpisz kod aby odblokować kanały!', 'error');
         showCodeModal();
         return;
@@ -428,7 +439,7 @@ function goBack() {
     document.title = 'kaqvuChannels';
 }
 
-function handlePopState(event) {
+async function handlePopState(event) {
     if (checkExpiry()) return;
     
     const path = window.location.pathname;

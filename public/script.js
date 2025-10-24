@@ -6,12 +6,222 @@ const categories = {
 };
 
 let channelLookupById = {};
-let firstClickTracker = new Set();
 let channelsData = {};
 
-const adLink = 'https://www.revenuecpmgate.com/edh6fisc?key=0c99a1d5fe8ce628e3dcaa38ebc0d01b';
-
 const EXPIRY_DATE = new Date('2025-11-17T16:36:00');
+
+const AD_LINKS = [
+    'https://www.revenuecpmgate.com/edh6fisc?key=0c99a1d5fe8ce628e3dcaa38ebc0d01b',
+    'https://www.revenuecpmgate.com/edh6fisc?key=0c99a1d5fe8ce628e3dcaa38ebc0d01b',
+    'https://www.revenuecpmgate.com/edh6fisc?key=0c99a1d5fe8ce628e3dcaa38ebc0d01b',
+    'https://www.revenuecpmgate.com/edh6fisc?key=0c99a1d5fe8ce628e3dcaa38ebc0d01b',
+    'https://www.revenuecpmgate.com/edh6fisc?key=0c99a1d5fe8ce628e3dcaa38ebc0d01b'
+];
+
+function showNotification(message, type = 'error') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    
+    notification.innerHTML = `
+        <div class="notification-content">${message}</div>
+        <div class="notification-progress"></div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => notification.classList.add('show'), 10);
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 10000);
+}
+
+async function getDailyCodeFromFirestore() {
+    try {
+        const code = await window.channelsFirestore.getDailyCode();
+        return code;
+    } catch (error) {
+        console.error('Błąd pobierania kodu:', error);
+        return null;
+    }
+}
+
+function checkDailyCode() {
+    const savedCode = localStorage.getItem('dailyCode');
+    const savedTimestamp = localStorage.getItem('codeTimestamp');
+    
+    if (!savedCode || !savedTimestamp) {
+        return false;
+    }
+    
+    const now = new Date().getTime();
+    const savedTime = parseInt(savedTimestamp);
+    const twelveHoursInMs = 12 * 60 * 60 * 1000;
+    
+    if (now - savedTime > twelveHoursInMs) {
+        localStorage.removeItem('dailyCode');
+        localStorage.removeItem('codeTimestamp');
+        localStorage.removeItem('adProgress');
+        return false;
+    }
+    
+    return true;
+}
+
+async function isCodeValid(inputCode) {
+    const correctCode = await getDailyCodeFromFirestore();
+    return inputCode.toUpperCase() === correctCode;
+}
+
+function getAdProgress() {
+    const progress = localStorage.getItem('adProgress');
+    return progress ? JSON.parse(progress) : [false, false, false, false, false];
+}
+
+function setAdProgress(index) {
+    const progress = getAdProgress();
+    progress[index] = true;
+    localStorage.setItem('adProgress', JSON.stringify(progress));
+    return progress;
+}
+
+function allAdsCompleted() {
+    const progress = getAdProgress();
+    return progress.every(ad => ad === true);
+}
+
+async function showCodeModal() {
+    if (checkExpiry()) return;
+    
+    if (checkDailyCode()) {
+        const modal = document.createElement('div');
+        modal.className = 'code-modal';
+        modal.id = 'codeModal';
+        
+        modal.innerHTML = `
+            <div class="code-modal-content">
+                <div class="code-modal-header">
+                    <h2>Status kodu</h2>
+                    <button class="close-btn" onclick="closeCodeModal()">×</button>
+                </div>
+                <div class="code-modal-body">
+                    <div class="code-active-status">
+                        <div class="check-icon">
+                            <svg viewBox="0 0 24 24" width="60" height="60">
+                                <circle cx="12" cy="12" r="11" fill="#06ffa5"/>
+                                <path d="M7 12l3 3 7-7" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <p class="code-active-text">KOD JEST AKTYWNY!</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        return;
+    }
+    
+    const modal = document.createElement('div');
+    modal.className = 'code-modal';
+    modal.id = 'codeModal';
+    
+    const progress = getAdProgress();
+    const allCompleted = allAdsCompleted();
+    
+    let codeDisplay = '';
+    if (allCompleted) {
+        const code = await getDailyCodeFromFirestore();
+        codeDisplay = `
+            <div class="code-display">
+                <p>Twój kod na dziś:</p>
+                <div class="code-value">${code}</div>
+            </div>
+            <div class="code-input-group">
+                <input type="text" 
+                       class="code-input" 
+                       id="codeInput" 
+                       placeholder="Wpisz kod"
+                       maxlength="8">
+                <button class="save-code-btn" onclick="saveCode()">Zapisz</button>
+            </div>
+        `;
+    } else {
+        codeDisplay = '<p class="code-locked">🔒 Kod zostanie wyświetlony po kliknięciu wszystkich reklam</p>';
+    }
+    
+    modal.innerHTML = `
+        <div class="code-modal-content">
+            <div class="code-modal-header">
+                <h2>Odblokuj dostęp</h2>
+                <button class="close-btn" onclick="closeCodeModal()">×</button>
+            </div>
+            <div class="code-modal-body">
+                <p class="code-instruction">Kliknij w każdy przycisk AD i poczekaj 5 sekund:</p>
+                <div class="ad-buttons">
+                    ${AD_LINKS.map((link, i) => `
+                        <button class="ad-btn ${progress[i] ? 'completed' : ''}" 
+                                onclick="openAdLink(${i}, '${link}')"
+                                ${progress[i] ? 'disabled' : ''}>
+                            AD${i + 1}
+                        </button>
+                    `).join('')}
+                </div>
+                ${codeDisplay}
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function closeCodeModal() {
+    const modal = document.getElementById('codeModal');
+    if (modal) modal.remove();
+}
+
+function openAdLink(index, link) {
+    const btn = event.target;
+    btn.disabled = true;
+    btn.innerHTML = '<div class="ad-spinner"></div>';
+    
+    window.open(link, '_blank');
+    
+    setTimeout(() => {
+        setAdProgress(index);
+        btn.classList.add('completed');
+        btn.innerHTML = `AD${index + 1}`;
+        
+        if (allAdsCompleted()) {
+            closeCodeModal();
+            setTimeout(() => showCodeModal(), 300);
+        }
+    }, 5000);
+}
+
+async function saveCode() {
+    const input = document.getElementById('codeInput');
+    const code = input.value.trim().toUpperCase();
+    
+    if (!code) {
+        showNotification('Wpisz kod!', 'error');
+        return;
+    }
+    
+    const isValid = await isCodeValid(code);
+    if (!isValid) {
+        showNotification('Nieprawidłowy kod!', 'error');
+        return;
+    }
+    
+    const timestamp = new Date().getTime();
+    localStorage.setItem('dailyCode', code);
+    localStorage.setItem('codeTimestamp', timestamp.toString());
+    
+    showNotification('✅ Kod zapisany! Dostęp odblokowany na 12h.', 'success');
+    closeCodeModal();
+}
 
 function escapeHtml(unsafe) {
     return unsafe
@@ -153,9 +363,9 @@ function playChannel(channelId, channelName, url, event) {
     
     if (checkExpiry()) return;
     
-    if (!firstClickTracker.has(channelId)) {
-        firstClickTracker.add(channelId);
-        window.open(adLink, '_blank');
+    if (!checkDailyCode()) {
+        showNotification('⚠️ Wpisz kod aby odblokować kanały!', 'error');
+        showCodeModal();
         return;
     }
     

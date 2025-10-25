@@ -57,21 +57,46 @@ async function getDailyCodeFromFirestore() {
     }
 }
 
+async function checkAndResetIfNewDay() {
+    const savedTimestamp = localStorage.getItem('codeTimestamp');
+    
+    if (!savedTimestamp) {
+        return;
+    }
+    
+    const serverTime = await getServerTime();
+    const savedTime = new Date(parseInt(savedTimestamp));
+    
+    const serverDate = serverTime.toISOString().split('T')[0];
+    const savedDate = savedTime.toISOString().split('T')[0];
+    
+    if (serverDate !== savedDate) {
+        localStorage.removeItem('adProgress');
+        localStorage.removeItem('codeDate');
+        localStorage.removeItem('dailyCode');
+        localStorage.removeItem('codeTimestamp');
+    }
+}
+
 async function checkDailyCode() {
     const savedCode = localStorage.getItem('dailyCode');
-    const savedDate = localStorage.getItem('codeDate');
+    const savedTimestamp = localStorage.getItem('codeTimestamp');
     
-    if (!savedCode || !savedDate) {
+    if (!savedCode || !savedTimestamp) {
         return false;
     }
     
     const serverTime = await getServerTime();
-    const serverDateString = serverTime.toISOString().split('T')[0];
+    const savedTime = new Date(parseInt(savedTimestamp));
     
-    if (savedDate !== serverDateString) {
+    const serverDate = serverTime.toISOString().split('T')[0];
+    const savedDate = savedTime.toISOString().split('T')[0];
+    
+    if (serverDate !== savedDate) {
         localStorage.removeItem('dailyCode');
         localStorage.removeItem('codeDate');
         localStorage.removeItem('adProgress');
+        localStorage.removeItem('codeTimestamp');
         return false;
     }
     
@@ -102,6 +127,8 @@ function allAdsCompleted() {
 
 async function showCodeModal() {
     if (checkExpiry()) return;
+    
+    await checkAndResetIfNewDay();
     
     if (await checkDailyCode()) {
         const modal = document.createElement('div');
@@ -152,7 +179,8 @@ async function showCodeModal() {
                        class="code-input" 
                        id="codeInput" 
                        placeholder="Wpisz kod"
-                       maxlength="8">
+                       maxlength="8"
+                       oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')">
                 <button class="save-code-btn" onclick="saveCode()">Zapisz</button>
             </div>
         `;
@@ -190,21 +218,21 @@ function closeCodeModal() {
     if (modal) modal.remove();
 }
 
-function openAdLink(index, link) {
+async function openAdLink(index, link) {
     const btn = event.target;
     btn.disabled = true;
     btn.innerHTML = '<div class="ad-spinner"></div>';
     
     window.open(link, '_blank');
     
-    setTimeout(() => {
+    setTimeout(async () => {
         setAdProgress(index);
         btn.classList.add('completed');
         btn.innerHTML = `AD${index + 1}`;
         
         if (allAdsCompleted()) {
             closeCodeModal();
-            setTimeout(() => showCodeModal(), 300);
+            setTimeout(async () => await showCodeModal(), 300);
         }
     }, 5000);
 }
@@ -229,6 +257,7 @@ async function saveCode() {
     
     localStorage.setItem('dailyCode', code);
     localStorage.setItem('codeDate', serverDateString);
+    localStorage.setItem('codeTimestamp', serverTime.getTime().toString());
     
     showNotification('✅ Kod zapisany! Dostęp odblokowany do północy.', 'success');
     closeCodeModal();
@@ -618,8 +647,10 @@ function goToAdminPanel() {
     window.location.href = '/channels';
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     if (checkExpiry()) return;
+    
+    await checkAndResetIfNewDay();
     
     setTimeout(async () => {
         if (typeof window.channelsFirestore !== 'undefined') {

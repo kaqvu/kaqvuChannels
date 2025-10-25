@@ -1111,6 +1111,20 @@ h1 {
     animation: fadeIn 0.5s ease-out 0.2s both;
 }
 
+.code-display-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease-out, opacity 0.5s ease-out, margin-top 0.5s ease-out;
+    margin-top: 0;
+}
+
+.code-display-wrapper.show {
+    max-height: 500px;
+    opacity: 1;
+    margin-top: 20px;
+}
+
 @keyframes glow {
     from { opacity: 0.5; }
     to { opacity: 1; }

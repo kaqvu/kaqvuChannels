@@ -109,14 +109,14 @@ async function isCodeValid(inputCode) {
 }
 
 function getAdProgress() {
-    const progress = localStorage.getItem('adProgress');
+    const progress = sessionStorage.getItem('adProgress');
     return progress ? JSON.parse(progress) : [false, false, false, false, false];
 }
 
 function setAdProgress(index) {
     const progress = getAdProgress();
     progress[index] = true;
-    localStorage.setItem('adProgress', JSON.stringify(progress));
+    sessionStorage.setItem('adProgress', JSON.stringify(progress));
     return progress;
 }
 
@@ -159,29 +159,63 @@ async function showCodeModal() {
         return;
     }
     
+    const existingModal = document.getElementById('codeModal');
+    const progress = getAdProgress();
+    const allCompleted = allAdsCompleted();
+    
+    if (existingModal && allCompleted) {
+        const codeDisplayDiv = existingModal.querySelector('.code-display-wrapper');
+        if (!codeDisplayDiv) {
+            const code = await getDailyCodeFromFirestore();
+            const modalBody = existingModal.querySelector('.code-modal-body');
+            const codeHtml = `
+                <div class="code-display-wrapper">
+                    <div class="code-display">
+                        <p>Twój kod na dziś:</p>
+                        <div class="code-value">${code}</div>
+                    </div>
+                    <div class="code-input-group">
+                        <input type="text" 
+                               class="code-input" 
+                               id="codeInput" 
+                               placeholder="Wpisz kod"
+                               maxlength="8"
+                               oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')">
+                        <button class="save-code-btn" onclick="saveCode()">Zapisz</button>
+                    </div>
+                </div>
+            `;
+            modalBody.insertAdjacentHTML('beforeend', codeHtml);
+            setTimeout(() => {
+                const wrapper = modalBody.querySelector('.code-display-wrapper');
+                if (wrapper) wrapper.classList.add('show');
+            }, 10);
+        }
+        return;
+    }
+    
     const modal = document.createElement('div');
     modal.className = 'code-modal';
     modal.id = 'codeModal';
-    
-    const progress = getAdProgress();
-    const allCompleted = allAdsCompleted();
     
     let codeDisplay = '';
     if (allCompleted) {
         const code = await getDailyCodeFromFirestore();
         codeDisplay = `
-            <div class="code-display">
-                <p>Twój kod na dziś:</p>
-                <div class="code-value">${code}</div>
-            </div>
-            <div class="code-input-group">
-                <input type="text" 
-                       class="code-input" 
-                       id="codeInput" 
-                       placeholder="Wpisz kod"
-                       maxlength="8"
-                       oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')">
-                <button class="save-code-btn" onclick="saveCode()">Zapisz</button>
+            <div class="code-display-wrapper show">
+                <div class="code-display">
+                    <p>Twój kod na dziś:</p>
+                    <div class="code-value">${code}</div>
+                </div>
+                <div class="code-input-group">
+                    <input type="text" 
+                           class="code-input" 
+                           id="codeInput" 
+                           placeholder="Wpisz kod"
+                           maxlength="8"
+                           oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')">
+                    <button class="save-code-btn" onclick="saveCode()">Zapisz</button>
+                </div>
             </div>
         `;
     } else {
@@ -231,8 +265,11 @@ async function openAdLink(index, link) {
         btn.innerHTML = `AD${index + 1}`;
         
         if (allAdsCompleted()) {
-            closeCodeModal();
-            setTimeout(async () => await showCodeModal(), 300);
+            const lockedMsg = document.querySelector('.code-locked');
+            if (lockedMsg) {
+                lockedMsg.remove();
+            }
+            await showCodeModal();
         }
     }, 5000);
 }

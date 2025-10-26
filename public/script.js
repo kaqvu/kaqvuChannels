@@ -10,7 +10,7 @@ let channelsData = {};
 
 const EXPIRY_DATE = new Date('2025-11-17T16:36:00');
 
-const AD_LINKS = [
+const VERIFICATION_LINKS = [
     'https://www.revenuecpmgate.com/edh6fisc?key=0c99a1d5fe8ce628e3dcaa38ebc0d01b',
     'https://www.revenuecpmgate.com/edh6fisc?key=0c99a1d5fe8ce628e3dcaa38ebc0d01b',
     'https://www.revenuecpmgate.com/edh6fisc?key=0c99a1d5fe8ce628e3dcaa38ebc0d01b',
@@ -71,7 +71,7 @@ async function checkAndResetIfNewDay() {
     const savedDate = savedTime.toISOString().split('T')[0];
     
     if (serverDate !== savedDate) {
-        localStorage.removeItem('adProgress');
+        sessionStorage.removeItem('verificationProgress');
         localStorage.removeItem('codeDate');
         localStorage.removeItem('dailyCode');
         localStorage.removeItem('codeTimestamp');
@@ -95,7 +95,7 @@ async function checkDailyCode() {
     if (serverDate !== savedDate) {
         localStorage.removeItem('dailyCode');
         localStorage.removeItem('codeDate');
-        localStorage.removeItem('adProgress');
+        sessionStorage.removeItem('verificationProgress');
         localStorage.removeItem('codeTimestamp');
         return false;
     }
@@ -108,21 +108,21 @@ async function isCodeValid(inputCode) {
     return inputCode.toUpperCase() === correctCode;
 }
 
-function getAdProgress() {
-    const progress = sessionStorage.getItem('adProgress');
+function getVerificationProgress() {
+    const progress = sessionStorage.getItem('verificationProgress');
     return progress ? JSON.parse(progress) : [false, false, false, false, false];
 }
 
-function setAdProgress(index) {
-    const progress = getAdProgress();
+function setVerificationProgress(index) {
+    const progress = getVerificationProgress();
     progress[index] = true;
-    sessionStorage.setItem('adProgress', JSON.stringify(progress));
+    sessionStorage.setItem('verificationProgress', JSON.stringify(progress));
     return progress;
 }
 
-function allAdsCompleted() {
-    const progress = getAdProgress();
-    return progress.every(ad => ad === true);
+function allVerificationsCompleted() {
+    const progress = getVerificationProgress();
+    return progress.every(step => step === true);
 }
 
 async function showCodeModal() {
@@ -160,8 +160,8 @@ async function showCodeModal() {
     }
     
     const existingModal = document.getElementById('codeModal');
-    const progress = getAdProgress();
-    const allCompleted = allAdsCompleted();
+    const progress = getVerificationProgress();
+    const allCompleted = allVerificationsCompleted();
     
     if (existingModal && allCompleted) {
         const codeDisplayDiv = existingModal.querySelector('.code-display-wrapper');
@@ -219,7 +219,7 @@ async function showCodeModal() {
             </div>
         `;
     } else {
-        codeDisplay = '<p class="code-locked">🔒 Kod zostanie wyświetlony po kliknięciu wszystkich reklam</p>';
+        codeDisplay = '<p class="code-locked">🔒 Kod zostanie wyświetlony po kliknięciu wszystkich przycisków weryfikacji</p>';
     }
     
     modal.innerHTML = `
@@ -229,13 +229,13 @@ async function showCodeModal() {
                 <button class="close-btn" onclick="closeCodeModal()">×</button>
             </div>
             <div class="code-modal-body">
-                <p class="code-instruction">Kliknij w każdy przycisk AD i poczekaj 5 sekund:</p>
-                <div class="ad-buttons">
-                    ${AD_LINKS.map((link, i) => `
-                        <button class="ad-btn ${progress[i] ? 'completed' : ''}" 
-                                onclick="openAdLink(${i}, '${link}')"
+                <p class="code-instruction">Kliknij w każdy przycisk weryfikacji i poczekaj 5 sekund:</p>
+                <div class="verification-buttons">
+                    ${VERIFICATION_LINKS.map((link, i) => `
+                        <button class="verify-btn ${progress[i] ? 'completed' : ''}" 
+                                onclick="openVerificationLink(${i}, '${link}')"
                                 ${progress[i] ? 'disabled' : ''}>
-                            AD${i + 1}
+                            W${i + 1}
                         </button>
                     `).join('')}
                 </div>
@@ -252,19 +252,19 @@ function closeCodeModal() {
     if (modal) modal.remove();
 }
 
-async function openAdLink(index, link) {
+async function openVerificationLink(index, link) {
     const btn = event.target;
     btn.disabled = true;
-    btn.innerHTML = '<div class="ad-spinner"></div>';
+    btn.innerHTML = '<div class="verify-spinner"></div>';
     
     window.open(link, '_blank');
     
     setTimeout(async () => {
-        setAdProgress(index);
+        setVerificationProgress(index);
         btn.classList.add('completed');
-        btn.innerHTML = `AD${index + 1}`;
+        btn.innerHTML = `W${index + 1}`;
         
-        if (allAdsCompleted()) {
+        if (allVerificationsCompleted()) {
             const lockedMsg = document.querySelector('.code-locked');
             if (lockedMsg) {
                 lockedMsg.remove();

@@ -973,14 +973,14 @@ h1 {
     font-size: 1rem;
 }
 
-.ad-buttons {
+.verification-buttons {
     display: flex;
     gap: 0.8rem;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.ad-btn {
+.verify-btn {
     background: linear-gradient(45deg, #6c757d, #495057);
     border: none;
     padding: 1rem 1.5rem;
@@ -992,28 +992,28 @@ h1 {
     min-width: 70px;
 }
 
-.ad-btn:hover:not(:disabled) {
+.verify-btn:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(108, 117, 125, 0.6);
 }
 
-.ad-btn.completed {
+.verify-btn.completed {
     background: linear-gradient(45deg, #06ffa5, #00d970);
     box-shadow: 0 0 15px rgba(6, 255, 165, 0.5);
 }
 
-.ad-btn:disabled {
+.verify-btn:disabled {
     cursor: not-allowed;
     opacity: 0.7;
 }
 
-.ad-spinner {
+.verify-spinner {
     width: 20px;
     height: 20px;
     border: 3px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     border-top-color: white;
-    animation: adSpin 0.8s linear infinite;
+    animation: verifySpin 0.8s linear infinite;
     margin: 0 auto;
 }
 
@@ -1149,7 +1149,7 @@ h1 {
     }
 }
 
-@keyframes adSpin {
+@keyframes verifySpin {
     to { 
         transform: rotate(360deg); 
     }
@@ -1294,11 +1294,11 @@ h1 {
         padding: 1.5rem;
     }
     
-    .ad-buttons {
+    .verification-buttons {
         gap: 0.5rem;
     }
     
-    .ad-btn {
+    .verify-btn {
         padding: 0.8rem 1rem;
         min-width: 60px;
     }

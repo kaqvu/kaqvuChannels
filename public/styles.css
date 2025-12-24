@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,8 +7,8 @@
 }
 
 body {
-    font-family: 'VT323', monospace;
-    background-color: #0a0a0a;
+    font-family: 'Press Start 2P', cursive;
+    background-color: #000000;
     color: #e0e0e0;
     min-height: 100vh;
     overflow-x: hidden;
@@ -15,7 +17,7 @@ body {
 .header {
     text-align: center;
     padding: 60px 20px 40px;
-    background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+    background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
     border-bottom: 2px solid #2a2a2a;
     position: relative;
 }
@@ -47,25 +49,26 @@ h1 {
 }
 
 .admin-btn {
-    background: linear-gradient(145deg, #00cc00, #009900);
-    color: #ffffff;
+    background: #000000;
+    color: #00ff00;
     padding: 12px 20px;
-    border-radius: 8px;
+    border-radius: 0;
     font-size: 1.3rem;
     font-weight: 600;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
-    border: 2px solid #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4), inset 0 0 0 2px #00ff00;
+    border: 4px solid #00ff00;
     transition: all 0.3s ease;
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
 }
 
 .admin-btn:hover {
-    background: linear-gradient(145deg, #00ff00, #00cc00);
-    box-shadow: 0 0 30px rgba(0, 255, 0, 0.7);
-    transform: translateY(-2px);
+    background: #00ff00;
+    color: #000000;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.7), inset 0 0 0 2px #000000;
+    transform: translateY(-2px) scale(1.05);
 }
 
 .expiry-notice {
@@ -73,14 +76,14 @@ h1 {
     right: 30px;
     top: 50%;
     transform: translateY(-50%);
-    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    background: #000000;
     color: #00ff00;
     padding: 12px 20px;
-    border-radius: 8px;
+    border-radius: 0;
     font-size: 1.3rem;
     font-weight: 600;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-    border: 2px solid #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 0 2px #00ff00;
+    border: 4px solid #00ff00;
     letter-spacing: 1px;
 }
 
@@ -99,17 +102,18 @@ h1 {
 }
 
 .search-input {
-    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-    border: 2px solid #2a2a2a;
-    border-radius: 10px;
+    background: #000000;
+    border: 4px solid #00ff00;
+    border-radius: 0;
     padding: 15px 25px;
     color: #e0e0e0;
     font-size: 1.5rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     width: 100%;
     max-width: 500px;
     outline: none;
     transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 }
 
 .search-input::placeholder {
@@ -118,17 +122,18 @@ h1 {
 
 .search-input:focus {
     border-color: #00ff00;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+    transform: scale(1.02);
 }
 
 .code-btn {
-    background: linear-gradient(145deg, #00cc00, #009900);
-    border: 2px solid #00ff00;
+    background: #000000;
+    border: 4px solid #00ff00;
     padding: 15px 30px;
-    border-radius: 10px;
-    color: #ffffff;
+    border-radius: 0;
+    color: #00ff00;
     font-size: 1.5rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -139,9 +144,10 @@ h1 {
 }
 
 .code-btn:hover {
-    background: linear-gradient(145deg, #00ff00, #00cc00);
+    background: #00ff00;
+    color: #000000;
     box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
 }
 
 .category {
@@ -164,9 +170,9 @@ h1 {
 }
 
 .channel-card {
-    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-    border: 2px solid #2a2a2a;
-    border-radius: 15px;
+    background: #000000;
+    border: 4px solid #00ff00;
+    border-radius: 0;
     padding: 0;
     overflow: hidden;
     transition: all 0.4s ease;
@@ -174,6 +180,7 @@ h1 {
     display: flex;
     flex-direction: column;
     position: relative;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 }
 
 .channel-card::before {
@@ -190,9 +197,9 @@ h1 {
 }
 
 .channel-card:hover {
-    transform: translateY(-12px);
+    transform: translateY(-12px) scale(1.03);
     border-color: #00ff00;
-    box-shadow: 0 15px 50px rgba(0, 255, 0, 0.4);
+    box-shadow: 0 15px 50px rgba(0, 255, 0, 0.6);
 }
 
 .channel-card:hover::before {
@@ -218,35 +225,35 @@ h1 {
 
 .quality-badge {
     padding: 8px 15px;
-    border-radius: 8px;
+    border-radius: 0;
     font-size: 1.3rem;
     font-weight: bold;
     text-transform: uppercase;
-    border: 2px solid;
+    border: 3px solid;
 }
 
 .quality-uhd {
-    background: linear-gradient(145deg, #00cc00, #009900);
+    background: #000000;
     border-color: #00ff00;
-    color: #ffffff;
+    color: #00ff00;
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
 }
 
 .quality-shd {
-    background: linear-gradient(145deg, #00cc00, #009900);
+    background: #000000;
     border-color: #00ff00;
-    color: #ffffff;
+    color: #00ff00;
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
 }
 
 .quality-hd {
-    background: linear-gradient(145deg, #00aa00, #007700);
+    background: #000000;
     border-color: #00cc00;
-    color: #ffffff;
+    color: #00cc00;
 }
 
 .quality-sd {
-    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    background: #000000;
     border-color: #444444;
     color: #888888;
 }
@@ -269,12 +276,12 @@ h1 {
 }
 
 .url-btn {
-    background: linear-gradient(145deg, #00cc00, #009900);
-    border: 2px solid #00ff00;
+    background: #000000;
+    border: 3px solid #00ff00;
     padding: 10px 15px;
-    border-radius: 8px;
-    color: #ffffff;
-    font-family: 'VT323', monospace;
+    border-radius: 0;
+    color: #00ff00;
+    font-family: 'Press Start 2P', cursive;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -284,7 +291,8 @@ h1 {
 }
 
 .url-btn:hover {
-    background: linear-gradient(145deg, #00ff00, #00cc00);
+    background: #00ff00;
+    color: #000000;
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
     transform: scale(1.1);
 }
@@ -292,13 +300,13 @@ h1 {
 .play-button {
     display: block;
     width: 100%;
-    background: linear-gradient(145deg, #00cc00, #009900);
+    background: #000000;
     border: none;
-    border-top: 2px solid #00ff00;
+    border-top: 4px solid #00ff00;
     padding: 15px;
-    color: #ffffff;
+    color: #00ff00;
     font-size: 1.6rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -309,20 +317,22 @@ h1 {
 }
 
 .play-button:hover {
-    background: linear-gradient(145deg, #00ff00, #00cc00);
+    background: #00ff00;
+    color: #000000;
     box-shadow: 0 -5px 30px rgba(0, 255, 0, 0.5);
+    transform: scale(1.02);
 }
 
 .edit-button {
     display: block;
     width: 100%;
-    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    background: #000000;
     border: none;
-    border-top: 2px solid #00ff00;
+    border-top: 4px solid #00ff00;
     padding: 15px;
     color: #00ff00;
     font-size: 1.6rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -332,14 +342,16 @@ h1 {
 }
 
 .edit-button:hover {
-    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    background: #00ff00;
+    color: #000000;
     box-shadow: 0 -5px 20px rgba(0, 255, 0, 0.3);
+    transform: scale(1.02);
 }
 
 .no-channel-bar {
-    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-    border: 2px solid #444444;
-    border-radius: 10px;
+    background: #000000;
+    border: 4px solid #444444;
+    border-radius: 0;
     padding: 15px;
     text-align: center;
     color: #888888;
@@ -351,13 +363,13 @@ h1 {
 .delete-channel-btn {
     display: block;
     width: 100%;
-    background: linear-gradient(145deg, #cc0000, #990000);
+    background: #000000;
     border: none;
-    border-top: 2px solid #ff0000;
+    border-top: 4px solid #ff0000;
     padding: 15px;
-    color: #ffffff;
+    color: #ff0000;
     font-size: 1.6rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -367,8 +379,10 @@ h1 {
 }
 
 .delete-channel-btn:hover {
-    background: linear-gradient(145deg, #ff0000, #cc0000);
+    background: #ff0000;
+    color: #000000;
     box-shadow: 0 -5px 30px rgba(255, 0, 0, 0.5);
+    transform: scale(1.02);
 }
 
 .loading {
@@ -382,7 +396,7 @@ h1 {
     width: 50px;
     height: 50px;
     border: 4px solid rgba(0, 255, 0, 0.2);
-    border-radius: 50%;
+    border-radius: 0;
     border-top-color: #00ff00;
     animation: spin 1s linear infinite;
 }
@@ -428,14 +442,14 @@ h1 {
     position: absolute;
     top: 20px;
     left: 20px;
-    background: linear-gradient(145deg, #00cc00, #009900);
-    color: #ffffff;
-    border: 2px solid #00ff00;
+    background: #000000;
+    color: #00ff00;
+    border: 4px solid #00ff00;
     padding: 12px 25px;
-    border-radius: 8px;
+    border-radius: 0;
     cursor: pointer;
     font-size: 1.5rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     font-weight: bold;
     z-index: 1001;
     transition: all 0.3s ease;
@@ -443,8 +457,10 @@ h1 {
 }
 
 .back-button:hover {
-    background: linear-gradient(145deg, #00ff00, #00cc00);
+    background: #00ff00;
+    color: #000000;
     box-shadow: 0 0 30px rgba(0, 255, 0, 0.7);
+    transform: scale(1.05);
 }
 
 .main-view.hidden {
@@ -462,7 +478,7 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -471,16 +487,16 @@ h1 {
 
 .code-modal-content,
 .modal-content {
-    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    background: #000000;
     backdrop-filter: blur(20px);
-    border: 2px solid #00ff00;
-    border-radius: 20px;
+    border: 4px solid #00ff00;
+    border-radius: 0;
     padding: 2rem;
     max-width: 600px;
     width: 90%;
     max-height: 80vh;
     overflow-y: auto;
-    box-shadow: 0 8px 32px rgba(0, 255, 0, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 255, 0, 0.6);
 }
 
 .code-modal-header,
@@ -490,7 +506,7 @@ h1 {
     align-items: center;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #2a2a2a;
+    border-bottom: 2px solid #00ff00;
 }
 
 .code-modal-header h2,
@@ -512,14 +528,14 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: 0;
     transition: all 0.3s ease;
 }
 
 .close-btn:hover {
     background: rgba(255, 0, 0, 0.2);
     color: #ff0000;
-    transform: rotate(90deg);
+    transform: rotate(90deg) scale(1.2);
 }
 
 .code-modal-body,
@@ -544,30 +560,30 @@ h1 {
 }
 
 .verify-btn {
-    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-    border: 2px solid #444444;
+    background: #000000;
+    border: 3px solid #444444;
     padding: 1rem 1.5rem;
-    border-radius: 10px;
+    border-radius: 0;
     color: #888888;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     min-width: 70px;
     font-size: 1.4rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
 }
 
 .verify-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
     box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
     border-color: #00ff00;
     color: #00ff00;
 }
 
 .verify-btn.completed {
-    background: linear-gradient(145deg, #00cc00, #009900);
+    background: #000000;
     border-color: #00ff00;
-    color: #ffffff;
+    color: #00ff00;
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
 }
 
@@ -580,7 +596,7 @@ h1 {
     width: 20px;
     height: 20px;
     border: 3px solid rgba(0, 255, 0, 0.3);
-    border-radius: 50%;
+    border-radius: 0;
     border-top-color: #00ff00;
     animation: spin 0.8s linear infinite;
     margin: 0 auto;
@@ -598,16 +614,16 @@ h1 {
 }
 
 .code-value {
-    background: linear-gradient(145deg, #00cc00, #009900);
+    background: #000000;
     padding: 1.5rem 2rem;
-    border-radius: 15px;
+    border-radius: 0;
     font-size: 2.5rem;
     font-weight: bold;
-    color: #ffffff;
+    color: #00ff00;
     letter-spacing: 0.3em;
     text-align: center;
     box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
-    border: 2px solid #00ff00;
+    border: 4px solid #00ff00;
 }
 
 .code-locked {
@@ -616,8 +632,8 @@ h1 {
     font-size: 1.5rem;
     padding: 1.5rem;
     background: rgba(255, 170, 0, 0.1);
-    border-radius: 10px;
-    border: 2px solid #ffaa00;
+    border-radius: 0;
+    border: 3px solid #ffaa00;
 }
 
 .code-display-wrapper {
@@ -642,44 +658,47 @@ h1 {
 
 .code-input {
     flex: 1;
-    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-    border: 2px solid #2a2a2a;
-    border-radius: 10px;
+    background: #000000;
+    border: 3px solid #00ff00;
+    border-radius: 0;
     padding: 1rem 1.5rem;
     color: #e0e0e0;
     font-size: 1.5rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
     letter-spacing: 0.2em;
     text-align: center;
     outline: none;
     transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 }
 
 .code-input:focus {
     border-color: #00ff00;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+    transform: scale(1.02);
 }
 
 .save-code-btn {
-    background: linear-gradient(145deg, #00cc00, #009900);
-    border: 2px solid #00ff00;
+    background: #000000;
+    border: 3px solid #00ff00;
     padding: 1rem 2rem;
-    border-radius: 10px;
-    color: #ffffff;
+    border-radius: 0;
+    color: #00ff00;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1.5rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
     white-space: nowrap;
 }
 
 .save-code-btn:hover {
-    background: linear-gradient(145deg, #00ff00, #00cc00);
+    background: #00ff00;
+    color: #000000;
     box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
 }
 
 .code-active-status {
@@ -734,7 +753,7 @@ h1 {
     right: 20px;
     min-width: 300px;
     max-width: 400px;
-    border-radius: 15px;
+    border-radius: 0;
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     z-index: 99999;
@@ -753,20 +772,24 @@ h1 {
     color: white;
     font-weight: 600;
     font-size: 1.3rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
 }
 
 .notification.error .notification-content {
-    background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+    background: #000000;
+    border: 3px solid #ff0000;
+    color: #ff0000;
 }
 
 .notification.success .notification-content {
-    background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+    background: #000000;
+    border: 3px solid #00ff00;
+    color: #00ff00;
 }
 
 .notification-progress {
     height: 4px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 255, 0, 0.8);
     animation: notificationProgress 10s linear forwards;
 }
 
@@ -793,20 +816,22 @@ h1 {
 }
 
 .form-input {
-    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-    border: 2px solid #2a2a2a;
-    border-radius: 10px;
+    background: #000000;
+    border: 3px solid #00ff00;
+    border-radius: 0;
     padding: 1rem 1.5rem;
     color: #e0e0e0;
     font-size: 1.4rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     outline: none;
     transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 }
 
 .form-input:focus {
     border-color: #00ff00;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+    transform: scale(1.02);
 }
 
 .modal-buttons {
@@ -815,40 +840,41 @@ h1 {
     justify-content: flex-end;
     margin-top: 2rem;
     padding-top: 1rem;
-    border-top: 2px solid #2a2a2a;
+    border-top: 2px solid #00ff00;
 }
 
 .save-btn {
-    background: linear-gradient(145deg, #00cc00, #009900);
-    border: 2px solid #00ff00;
+    background: #000000;
+    border: 3px solid #00ff00;
     padding: 1rem 2rem;
-    border-radius: 10px;
-    color: #ffffff;
+    border-radius: 0;
+    color: #00ff00;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1.5rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
 }
 
 .save-btn:hover {
-    background: linear-gradient(145deg, #00ff00, #00cc00);
+    background: #00ff00;
+    color: #000000;
     box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
 }
 
 .cancel-btn {
-    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-    border: 2px solid #444444;
+    background: #000000;
+    border: 3px solid #444444;
     padding: 1rem 2rem;
-    border-radius: 10px;
+    border-radius: 0;
     color: #888888;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1.5rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
 }
 
@@ -856,7 +882,7 @@ h1 {
     border-color: #00ff00;
     color: #00ff00;
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
 }
 
 .confirm-modal {
@@ -865,7 +891,7 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -873,15 +899,15 @@ h1 {
 }
 
 .confirm-content {
-    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    background: #000000;
     backdrop-filter: blur(20px);
-    border: 2px solid #00ff00;
-    border-radius: 20px;
+    border: 4px solid #00ff00;
+    border-radius: 0;
     padding: 2rem;
     max-width: 400px;
     width: 90%;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 255, 0, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 255, 0, 0.6);
 }
 
 .confirm-content h3 {
@@ -898,36 +924,37 @@ h1 {
 }
 
 .confirm-yes-btn {
-    background: linear-gradient(145deg, #cc0000, #990000);
-    border: 2px solid #ff0000;
+    background: #000000;
+    border: 3px solid #ff0000;
     padding: 0.8rem 1.5rem;
-    border-radius: 10px;
-    color: #ffffff;
+    border-radius: 0;
+    color: #ff0000;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1.4rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
 }
 
 .confirm-yes-btn:hover {
-    background: linear-gradient(145deg, #ff0000, #cc0000);
+    background: #ff0000;
+    color: #000000;
     box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
 }
 
 .confirm-no-btn {
-    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-    border: 2px solid #444444;
+    background: #000000;
+    border: 3px solid #444444;
     padding: 0.8rem 1.5rem;
-    border-radius: 10px;
+    border-radius: 0;
     color: #888888;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1.4rem;
-    font-family: 'VT323', monospace;
+    font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
 }
 
@@ -935,7 +962,7 @@ h1 {
     border-color: #00ff00;
     color: #00ff00;
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.05);
 }
 
 @media (max-width: 768px) {

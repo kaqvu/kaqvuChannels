@@ -453,22 +453,7 @@ h1 {
     left: 30px;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 255, 0, 0.1);
-    color: #00ff00;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    border: 1px solid rgba(0, 255, 0, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
     pointer-events: auto;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
-}
-
-.admin-panel-btn:hover {
-    background: rgba(0, 255, 0, 0.2);
-    transform: translateY(-50%) scale(1.05);
-    box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
 }
 
 .admin-btn {
@@ -483,11 +468,12 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 0.85rem;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 }
 
 .admin-btn:hover {
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 5px 20px rgba(0, 255, 0, 0.6);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 5px 25px rgba(0, 255, 0, 0.7);
 }
 
 .home-btn {
@@ -1067,6 +1053,35 @@ h1 {
     max-width: 500px;
     width: 90%;
     box-shadow: 0 0 40px rgba(0, 255, 0, 0.4);
+    position: relative;
+}
+
+.code-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: #00ff00;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    line-height: 1;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.code-modal-close:hover {
+    color: #000000;
+    background: #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+    transform: rotate(90deg) scale(1.1);
 }
 
 .code-modal-title {
@@ -1248,6 +1263,8 @@ h1 {
     color: #ffffff;
     text-align: center;
     font-size: 0.9rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .verification-buttons {
@@ -1255,6 +1272,7 @@ h1 {
     gap: 0.6rem;
     justify-content: center;
     flex-wrap: wrap;
+    margin-bottom: 1.5rem;
 }
 
 .verify-btn {
@@ -1326,6 +1344,8 @@ h1 {
     padding: 0.8rem;
     background: rgba(255, 170, 0, 0.1);
     border-radius: 12px;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .notification {
@@ -1502,15 +1522,20 @@ h1 {
     }
     
     .admin-panel-btn {
-        font-size: 0.7rem;
-        padding: 0.4rem 0.8rem;
         position: static;
         transform: none;
         margin-bottom: 0.8rem;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .admin-btn {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.8rem;
     }
     
     .admin-btn:hover {
-        transform: scale(1.03);
+        transform: scale(1.05);
     }
     
     .header {
@@ -1616,6 +1641,11 @@ h1 {
     }
     
     .admin-panel-btn {
+        position: static;
+        transform: none;
+    }
+    
+    .admin-btn {
         font-size: 0.65rem;
         padding: 0.35rem 0.7rem;
     }

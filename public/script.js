@@ -8,7 +8,7 @@ const categories = {
 let channelLookupById = {};
 let channelsData = {};
 
-const EXPIRY_DATE = new Date('2025-11-17T16:36:00');
+const EXPIRY_DATE = new Date('2026-12-24T15:00:00');
 
 const VERIFICATION_LINKS = [
     'https://www.revenuecpmgate.com/edh6fisc?key=0c99a1d5fe8ce628e3dcaa38ebc0d01b',

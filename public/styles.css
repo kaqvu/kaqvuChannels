@@ -1058,8 +1058,8 @@ h1 {
 
 .code-modal-close {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 20px;
+    right: 20px;
     background: transparent;
     border: none;
     color: #00ff00;

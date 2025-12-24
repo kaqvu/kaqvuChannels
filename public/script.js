@@ -139,7 +139,7 @@ async function showCodeModal() {
             <div class="code-modal-content">
                 <div class="code-modal-header">
                     <h2>Status kodu</h2>
-                    <button class="close-btn" onclick="closeCodeModal()">×</button>
+                    <button class="code-modal-close" onclick="closeCodeModal()">×</button>
                 </div>
                 <div class="code-modal-body">
                     <div class="code-active-status">
@@ -226,7 +226,7 @@ async function showCodeModal() {
         <div class="code-modal-content">
             <div class="code-modal-header">
                 <h2>Odblokuj dostęp</h2>
-                <button class="close-btn" onclick="closeCodeModal()">×</button>
+                <button class="code-modal-close" onclick="closeCodeModal()">×</button>
             </div>
             <div class="code-modal-body">
                 <p class="code-instruction">Kliknij w każdy przycisk weryfikacji i poczekaj 5 sekund:</p>

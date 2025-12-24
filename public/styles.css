@@ -12,6 +12,24 @@ body {
     overflow-x: hidden;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 255, 0, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 0, 0.3);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 0, 0.5);
+}
+
 .header {
     text-align: center;
     padding: 1.5rem 0;
@@ -357,7 +375,7 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #000;
+    background: #000000;
     z-index: 1000;
 }
 
@@ -369,6 +387,7 @@ h1 {
     width: 100%;
     height: 100%;
     position: relative;
+    background: #000000;
 }
 
 .player-container iframe {
@@ -399,6 +418,7 @@ h1 {
 
 .main-view {
     display: block;
+    min-height: 100vh;
 }
 
 .main-view.hidden {
@@ -516,12 +536,88 @@ h1 {
     pointer-events: auto;
 }
 
-.login-container {
+.login-view {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 2rem;
+}
+
+.login-view.hidden {
+    display: none;
+}
+
+.login-container {
+    background: rgba(0, 255, 0, 0.05);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    min-width: 350px;
+    box-shadow: 0 8px 32px rgba(0, 255, 0, 0.2);
+}
+
+.login-container h1 {
+    text-align: center;
+    color: #00ff00;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+    pointer-events: auto;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.login-form input {
+    width: 100%;
+    background: rgba(0, 255, 0, 0.05);
+    border: 2px solid rgba(0, 255, 0, 0.3);
+    border-radius: 15px;
+    padding: 0.8rem 1rem;
+    color: white;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.login-form input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.login-form input:focus {
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.login-form button {
+    width: 100%;
+    background: linear-gradient(45deg, #00ff00, #00cc00);
+    border: none;
+    padding: 0.8rem;
+    border-radius: 15px;
+    color: #000000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.95rem;
+}
+
+.login-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 255, 0, 0.6);
+}
+
+.login-error {
+    color: #ff0000;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: -0.5rem;
 }
 
 .login-box {
@@ -583,6 +679,171 @@ h1 {
     box-shadow: 0 5px 20px rgba(0, 255, 0, 0.6);
 }
 
+.admin-view {
+    display: block;
+}
+
+.admin-view.hidden {
+    display: none;
+}
+
+.add-channel-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.add-channel-btn {
+    background: linear-gradient(45deg, #00ff00, #00cc00);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 20px;
+    color: #000000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.95rem;
+}
+
+.add-channel-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 5px 20px rgba(0, 255, 0, 0.6);
+}
+
+.edit-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-modal.hidden {
+    display: none;
+}
+
+.edit-modal:not(.hidden) {
+    display: flex;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-header h2 {
+    color: #00ff00;
+    font-size: 1.5rem;
+    text-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: #ff0000;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    line-height: 1;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: #00ff00;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.form-input {
+    width: 100%;
+    background: rgba(0, 255, 0, 0.05);
+    border: 2px solid rgba(0, 255, 0, 0.3);
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    color: white;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.form-input:focus {
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.urls-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.save-btn {
+    background: linear-gradient(45deg, #00ff00, #00cc00);
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 15px;
+    color: #000000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.save-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 5px 20px rgba(0, 255, 0, 0.6);
+}
+
+.cancel-btn {
+    background: rgba(100, 100, 100, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.7rem 1.5rem;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.cancel-btn:hover {
+    background: rgba(100, 100, 100, 0.5);
+    transform: translateY(-2px);
+}
+
 .modal {
     display: none;
     position: fixed;
@@ -590,13 +851,17 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     z-index: 2000;
     justify-content: center;
     align-items: center;
 }
 
 .modal.active {
+    display: flex !important;
+}
+
+.modal:not(.hidden) {
     display: flex;
 }
 
@@ -648,11 +913,17 @@ h1 {
     cursor: pointer;
 }
 
+.modal-select option {
+    background: #000000;
+    color: white;
+}
+
 .modal-buttons {
     display: flex;
     gap: 1rem;
     justify-content: center;
     margin-top: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .modal-btn-primary {
@@ -763,6 +1034,10 @@ h1 {
     box-shadow: 0 5px 20px rgba(0, 255, 0, 0.6);
 }
 
+.hidden {
+    display: none !important;
+}
+
 .code-modal {
     display: none;
     position: fixed;
@@ -770,13 +1045,17 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 3000;
     justify-content: center;
     align-items: center;
 }
 
 .code-modal.active {
+    display: flex !important;
+}
+
+.code-modal:not(.hidden):not(.active) {
     display: flex;
 }
 
@@ -868,13 +1147,17 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 3000;
     justify-content: center;
     align-items: center;
 }
 
 .confirm-modal.active {
+    display: flex !important;
+}
+
+.confirm-modal:not(.hidden) {
     display: flex;
 }
 
@@ -889,10 +1172,10 @@ h1 {
     box-shadow: 0 0 40px rgba(255, 0, 0, 0.3);
 }
 
-.confirm-title {
+.confirm-content h3 {
     color: #ff0000;
     font-size: 1.4rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .confirm-message {
@@ -1172,10 +1455,15 @@ h1 {
 }
 
 @media (max-width: 768px) {
-    .login-box {
+    .login-box,
+    .login-container {
         min-width: auto;
         width: 90%;
         padding: 1.5rem;
+    }
+    
+    .login-container h1 {
+        font-size: 1.4rem;
     }
     
     .modal-content {
@@ -1279,7 +1567,8 @@ h1 {
         flex-direction: column;
     }
     
-    .code-btn {
+    .code-btn,
+    .add-channel-btn {
         width: 100%;
         font-size: 0.8rem;
     }
